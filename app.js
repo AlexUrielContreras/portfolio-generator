@@ -1,4 +1,6 @@
 const inquire = require("inquirer");
+const { writeFile, copyFile } = require('./utils/generate-site.js')
+const generatePage = require('./src/page-template.js')
 
 
 const promptUser = () => {
@@ -120,7 +122,7 @@ const promptProject = portfolioData => {
       }
    ])
    .then(projectData => {
-      portfolioData.projects.push(portfolioData);
+      portfolioData.projects.push(projectData);
       if (projectData.confirmAddProject) {
          return promptProject(portfolioData)
       }else{
@@ -133,8 +135,22 @@ const promptProject = portfolioData => {
 promptUser()
    .then(promptProject)
    .then(portfolioData => {
-      console.log(portfolioData);
-   });       
+      return generatePage(portfolioData);
+   })
+   .then(pageHtml => {
+      return writeFile(pageHtml);
+   })
+   .then(writeFileResponse => {
+      console.log(writeFileResponse);
+      return copyFile();
+   }) 
+   .then(copyFileResponse => {
+      console.log(copyFileResponse)
+   })
+   .catch(err => {
+      console.log(err)
+   });
+     
 
 
 
@@ -143,17 +159,6 @@ promptUser()
 
 
 
-//const fs = require('fs');
-//const generatePage = require('./src/page-template.js');
-
-// takes command-line argument and makes them into arrays starting at index 2 
-// and including the last index
-//const [name, github] = profileDataArgs;
 
 
-
-//fs.writeFile('index.html', generatePage(name, github), err => {
-   //if (err) throw err;
-   //console.log('Portfolio complete! Check out index.html to see the output!');
-//});
 
