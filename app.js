@@ -1,14 +1,17 @@
+// adds the required npm packages
 const inquire = require("inquirer");
+// getting the promise objects from generate site js for the promises and links pages together so data can be transfer 
 const { writeFile, copyFile } = require('./utils/generate-site.js')
 const generatePage = require('./src/page-template.js')
 
-
+// function to prompt user for there name, github, and if they'll like to add a bio
 const promptUser = () => {
    return inquire.prompt([
       {
          type: 'input',
          name: 'name',
          message: 'What is your name?',
+         // validate makes sure that the user answers the question
          validate: nameInput => {
             if (nameInput) {
                return true 
@@ -38,6 +41,7 @@ const promptUser = () => {
          default: true
       },
       {
+         // when recive the answer form confirmAbout and see if its true or false to see if the question should be asked 
          type: 'input',
          name: 'about',
          message: 'Provide some information about yourself:',
@@ -58,7 +62,7 @@ const promptProject = portfolioData => {
    Add a New Project
    =================
    `);
-    // if there's no project array property, create one
+    // if there's no project array property, this creates one
     if (!portfolioData.projects) {
       portfolioData.projects = [];
    }
@@ -121,6 +125,10 @@ const promptProject = portfolioData => {
          default: false
       }
    ])
+   // when all questions are answered it pushes data to the portfolioData.projects array
+   // checks to see if confirmAddProject was true
+   // if turn uses a callback with the data inside it to asked the questions again
+   // if false send data to page-template
    .then(projectData => {
       portfolioData.projects.push(projectData);
       if (projectData.confirmAddProject) {

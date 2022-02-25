@@ -2,13 +2,13 @@ const fs = require('fs');
 const { resolve } = require('path');
 
 const writeFile = fileContent => {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         fs.writeFile('./dist/index.html', fileContent, err => {
             if (err) {
-            reject (err)
-            return;
-        } 
-            resolve ({
+                reject(err)
+                return;
+            }
+            resolve({
                 ok: true,
                 message: 'File created!'
             })
@@ -17,13 +17,13 @@ const writeFile = fileContent => {
 };
 
 const copyFile = () => {
-    return new promise((resolve, reject) => {
-        fs.copyFile('./dist/index.html', 'styles.css', err => {
+    return new Promise((resolve, reject) => {
+        fs.copyFile('./src/style.css', './dist/styles.css', err => {
             if (err) {
-                reject (err)
+                reject(err)
                 return;
             }
-            resolve ({
+            resolve({
                 ok: true,
                 message: 'File has been copied'
             })
@@ -31,4 +31,4 @@ const copyFile = () => {
     })
 }
 
-module.export = { writeFile, copyFile};
+module.exports = { writeFile, copyFile };

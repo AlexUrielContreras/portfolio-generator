@@ -1,5 +1,7 @@
+// function to see if the about section returned true or flase
 const generateAbout = aboutText => {
    if (!aboutText) {
+      // if false return a empty string
       return '';
    };
    return ` 
